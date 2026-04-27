@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>workshop-diy · 60 Android wrappers · al-Ghazali books + BLE/micro:bit</title>
+<meta name="description" content="60 Capacitor Android wrappers from workshop-diy.org — 47 books by Sheikh Mohammed al-Ghazali, 12 BLE/micro:bit kid-coding apps, and al-Ghirbal.">
+<meta name="theme-color" content="#0B1729">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0B1729; --bg-card: #132238; --text: #E7EFF9; --text-dim: #9AB0C7; --text-faint: #617791;
+    --border: #25395A;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: radial-gradient(ellipse at 15% 10%, rgba(139,26,26,0.15) 0%, transparent 45%),
+                radial-gradient(ellipse at 85% 95%, rgba(15,52,96,0.4) 0%, transparent 55%),
+                linear-gradient(180deg, #0A223D 0%, #0B1729 100%);
+    background-attachment: fixed; min-height: 100vh;
+    color: var(--text); line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 1280px; margin: 0 auto; padding: 40px 20px 60px; }
+
+  .hero { text-align: center; padding: 20px 0 32px; }
+  .kicker { letter-spacing: 0.3em; font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; font-weight: 600; }
+  .title {
+    font-family: 'Amiri', serif; font-size: clamp(2.5rem, 6vw, 4rem);
+    margin: 8px 0 4px; line-height: 1.1;
+    background: linear-gradient(180deg, #fff 50%, #B8CBE3 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .subtitle { color: var(--text-dim); font-size: clamp(0.95rem, 1.6vw, 1.15rem); margin: 0; }
+  .stats {
+    display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; margin: 22px 0 0;
+    color: var(--text-faint); font-size: 0.85rem;
+  }
+  .stats b { color: var(--text); font-size: 1.4rem; display: block; line-height: 1; }
+  .stats .stat { text-align: center; }
+
+  h2.section {
+    font-size: 1.4rem; margin: 40px 0 18px;
+    border-bottom: 1px solid var(--border); padding-bottom: 8px;
+    display: flex; align-items: baseline; gap: 12px;
+  }
+  h2.section .count { color: var(--text-faint); font-size: 0.85rem; font-weight: 400; }
+
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px;
+  }
+  .tile {
+    text-decoration: none; color: var(--text);
+    background: linear-gradient(145deg, var(--p), var(--pd));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px; padding: 18px 16px; min-height: 200px;
+    display: flex; flex-direction: column; gap: 4px;
+    transition: transform .15s, box-shadow .15s;
+    position: relative; overflow: hidden;
+  }
+  .tile::before {
+    content: ''; position: absolute; top: 0; right: 0; width: 80px; height: 80px;
+    background: radial-gradient(circle, var(--a) 0%, transparent 70%);
+    opacity: 0.4; pointer-events: none;
+  }
+  .tile:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+  .tile .emoji { font-size: 2.4rem; line-height: 1; margin-bottom: 4px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); }
+  .tile .ar { font-family: 'Amiri', serif; direction: rtl; font-size: 1.4rem; line-height: 1.1; color: #fff; }
+  .tile .en { font-size: 0.95rem; font-weight: 700; line-height: 1.2; color: #fff; margin-top: 2px; }
+  .tile .tagline { font-size: 0.78rem; color: rgba(255,255,255,0.75); flex: 1; line-height: 1.35; margin-top: 4px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+  .tile .actions { display: flex; gap: 8px; margin-top: 10px; }
+  .tile .btn-primary, .tile .btn-secondary {
+    flex: 1; padding: 7px 10px; border-radius: 6px; text-align: center;
+    font-size: 0.78rem; font-weight: 600; cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.25); transition: background .15s;
+  }
+  .tile .btn-primary { background: rgba(255,255,255,0.15); }
+  .tile .btn-primary:hover { background: rgba(255,255,255,0.28); }
+  .tile .btn-secondary { background: rgba(0,0,0,0.25); }
+  .tile .btn-secondary:hover { background: rgba(0,0,0,0.4); }
+
+  footer { text-align: center; margin-top: 60px; padding-top: 30px; border-top: 1px solid var(--border); color: var(--text-faint); font-size: 0.82rem; }
+  footer .ar { font-family: 'Amiri', serif; direction: rtl; font-size: 1.05rem; color: var(--text-dim); margin: 8px 0; }
+  footer a { color: var(--text-dim); }
+</style>
+</head>
+<body>
+<main>
+  <div class="hero">
+    <div class="kicker">workshop-diy · catalog</div>
+    <h1 class="title">60 Android wrappers</h1>
+    <p class="subtitle">47 trilingual books by Sheikh Mohammed al-Ghazali · 12 BLE/micro:bit kid-coding apps · 1 hand-built prototype</p>
+    <div class="stats">
+      <div class="stat"><b>60</b>repos</div>
+      <div class="stat"><b>60</b>signed AABs</div>
+      <div class="stat"><b>60</b>GitHub Pages live</div>
+      <div class="stat"><b>3</b>languages each</div>
+      <div class="stat"><b>MIT</b>open source</div>
+    </div>
+  </div>
+
+  <h2 class="section">📚 al-Ghazali books <span class="count">47 apps · trilingual AR/EN/FR · published from <a href="https://github.com/abourdim/koutoub-android-template" style="color:inherit">koutoub-android-template</a></span></h2>
+  <div class="grid">
+<a class="tile" href="https://abourdim.github.io/jaddid-hayatak-android/" style="--p:#2E7D52;--pd:#1A4D33;--a:#E8A93B">
+  <div class="emoji">🌱</div>
+  <div class="ar">جدد حياتك</div>
+  <div class="en">Renew Your Life</div>
+  <div class="tagline">Renewing heart and soul — al-Ghazali&#x27;s school</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/jaddid-hayatak-android/releases/download/v1.0-debug/jaddid-hayatak-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/jaddid-hayatak-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/al-dawah-fi-al-qarn-android/" style="--p:#764922;--pd:#472C14;--a:#CBC74D">
+  <div class="emoji">📢</div>
+  <div class="ar">الدعوة الإسلامية في القرن الحالي</div>
+  <div class="en">Islamic Dawah This Century</div>
+  <div class="tagline">Islamic Dawah This Century — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/al-dawah-fi-al-qarn-android/releases/download/v1.0-debug/al-dawah-fi-al-qarn-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/al-dawah-fi-al-qarn-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/al-fasad-al-siyasi-android/" style="--p:#765422;--pd:#473214;--a:#BECB4D">
+  <div class="emoji">🏛</div>
+  <div class="ar">الفساد السياسي</div>
+  <div class="en">Political Corruption</div>
+  <div class="tagline">Political Corruption — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/al-fasad-al-siyasi-android/releases/download/v1.0-debug/al-fasad-al-siyasi-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/al-fasad-al-siyasi-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/al-ghazw-al-thaqafi-android/" style="--p:#766122;--pd:#473A14;--a:#ABCB4D">
+  <div class="emoji">📖</div>
+  <div class="ar">الغزو الثقافي يمتد في فراغنا</div>
+  <div class="en">Cultural Invasion Spreads into Our Void</div>
+  <div class="tagline">Cultural Invasion Spreads into Our Void — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/al-ghazw-al-thaqafi-android/releases/download/v1.0-debug/al-ghazw-al-thaqafi-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/al-ghazw-al-thaqafi-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/al-hayat-al-ula-android/" style="--p:#766922;--pd:#473F14;--a:#9FCB4D">
+  <div class="emoji">🌅</div>
+  <div class="ar">الحياة الأولى</div>
+  <div class="en">The First Life</div>
+  <div class="tagline">The First Life — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/al-hayat-al-ula-android/releases/download/v1.0-debug/al-hayat-al-ula-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/al-hayat-al-ula-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/al-islam-al-muftara-alayh-android/" style="--p:#767622;--pd:#474714;--a:#8CCB4D">
+  <div class="emoji">⚖</div>
+  <div class="ar">الإسلام المفترى عليه</div>
+  <div class="en">Islam Falsely Accused</div>
+  <div class="tagline">Islam Falsely Accused — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/al-islam-al-muftara-alayh-android/releases/download/v1.0-debug/al-islam-al-muftara-alayh-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/al-islam-al-muftara-alayh-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/al-islam-fi-wajh-al-zahf-android/" style="--p:#6E7622;--pd:#424714;--a:#7FCB4D">
+  <div class="emoji">🔴</div>
+  <div class="ar">الإسلام في وجه الزحف الأحمر</div>
+  <div class="en">Islam Facing the Red Tide</div>
+  <div class="tagline">Islam Facing the Red Tide — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/al-islam-fi-wajh-al-zahf-android/releases/download/v1.0-debug/al-islam-fi-wajh-al-zahf-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/al-islam-fi-wajh-al-zahf-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/al-islam-wa-qanun-android/" style="--p:#5E7622;--pd:#384714;--a:#68CB4D">
+  <div class="emoji">⚖</div>
+  <div class="ar">الإسلام وقانون الأحوال الشخصية</div>
+  <div class="en">Islam &amp; Personal Status Law</div>
+  <div class="tagline">Islam &amp; Personal Status Law — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/al-islam-wa-qanun-android/releases/download/v1.0-debug/al-islam-wa-qanun-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/al-islam-wa-qanun-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/al-islam-wal-awda-al-iqtisadiyah-android/" style="--p:#567622;--pd:#334714;--a:#5BCB4D">
+  <div class="emoji">💰</div>
+  <div class="ar">الإسلام والأوضاع الاقتصادية</div>
+  <div class="en">Islam and Economic Affairs</div>
+  <div class="tagline">Islam and Economic Affairs — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/al-islam-wal-awda-al-iqtisadiyah-android/releases/download/v1.0-debug/al-islam-wal-awda-al-iqtisadiyah-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/al-islam-wal-awda-al-iqtisadiyah-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/al-islam-wal-istibdad-android/" style="--p:#497622;--pd:#2C4714;--a:#4DCB51">
+  <div class="emoji">⚖</div>
+  <div class="ar">الإسلام والاستبداد السياسي</div>
+  <div class="en">Islam &amp; Political Tyranny</div>
+  <div class="tagline">Islam &amp; Political Tyranny — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/al-islam-wal-istibdad-android/releases/download/v1.0-debug/al-islam-wal-istibdad-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/al-islam-wal-istibdad-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/al-islam-wal-manahij-android/" style="--p:#3D7622;--pd:#244714;--a:#4DCB64">
+  <div class="emoji">🟠</div>
+  <div class="ar">الإسلام والمناهج الاشتراكية</div>
+  <div class="en">Islam and Socialist Systems</div>
+  <div class="tagline">Islam and Socialist Systems — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/al-islam-wal-manahij-android/releases/download/v1.0-debug/al-islam-wal-manahij-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/al-islam-wal-manahij-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/al-istimar-android/" style="--p:#347622;--pd:#1F4714;--a:#4DCB70">
+  <div class="emoji">🏴</div>
+  <div class="ar">الاستعمار أحقاد وأطماع</div>
+  <div class="en">Colonialism: Grudges &amp; Greed</div>
+  <div class="tagline">Colonialism: Grudges &amp; Greed — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/al-istimar-android/releases/download/v1.0-debug/al-istimar-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/al-istimar-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/al-janib-al-atifi-android/" style="--p:#2A7622;--pd:#194714;--a:#4DCB7F">
+  <div class="emoji">💗</div>
+  <div class="ar">الجانب العاطفي من الإسلام</div>
+  <div class="en">The Emotional Side of Islam</div>
+  <div class="tagline">The Emotional Side of Islam — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/al-janib-al-atifi-android/releases/download/v1.0-debug/al-janib-al-atifi-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/al-janib-al-atifi-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/al-mahawir-al-khamsah-android/" style="--p:#227625;--pd:#144716;--a:#4DCB90">
+  <div class="emoji">🔥</div>
+  <div class="ar">المحاور الخمسة للقرآن الكريم</div>
+  <div class="en">The Five Axes of the Quran</div>
+  <div class="tagline">The Five Axes of the Quran — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/al-mahawir-al-khamsah-android/releases/download/v1.0-debug/al-mahawir-al-khamsah-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/al-mahawir-al-khamsah-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/al-sunnah-al-nabawiyah-android/" style="--p:#227626;--pd:#144717;--a:#4DCB92">
+  <div class="emoji">📜</div>
+  <div class="ar">السنة النبوية بين أهل الفقه وأهل الحديث</div>
+  <div class="en">Prophetic Sunnah</div>
+  <div class="tagline">Prophetic Sunnah — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/al-sunnah-al-nabawiyah-android/releases/download/v1.0-debug/al-sunnah-al-nabawiyah-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/al-sunnah-al-nabawiyah-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/al-taassub-wal-tasamuh-android/" style="--p:#227626;--pd:#144717;--a:#4DCB92">
+  <div class="emoji">🕊</div>
+  <div class="ar">التعصب والتسامح</div>
+  <div class="en">Fanaticism &amp; Tolerance</div>
+  <div class="tagline">Fanaticism &amp; Tolerance — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/al-taassub-wal-tasamuh-android/releases/download/v1.0-debug/al-taassub-wal-tasamuh-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/al-taassub-wal-tasamuh-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/aqidat-al-muslim-android/" style="--p:#227657;--pd:#144734;--a:#4DBACB">
+  <div class="emoji">🕌</div>
+  <div class="ar">عقيدة المسلم</div>
+  <div class="en">The Muslim&#x27;s Creed</div>
+  <div class="tagline">The Muslim&#x27;s Creed — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/aqidat-al-muslim-android/releases/download/v1.0-debug/aqidat-al-muslim-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/aqidat-al-muslim-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/difaa-al-aqidah-android/" style="--p:#22765A;--pd:#144736;--a:#4DB6CB">
+  <div class="emoji">🛡</div>
+  <div class="ar">دفاع عن العقيدة</div>
+  <div class="en">Defense of Creed</div>
+  <div class="tagline">Defense of Creed — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/difaa-al-aqidah-android/releases/download/v1.0-debug/difaa-al-aqidah-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/difaa-al-aqidah-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/dustur-al-wahdah-android/" style="--p:#22765E;--pd:#144738;--a:#4DB0CB">
+  <div class="emoji">🤝</div>
+  <div class="ar">دستور الوحدة الثقافية بين المسلمين</div>
+  <div class="en">Charter of Cultural Unity</div>
+  <div class="tagline">Charter of Cultural Unity — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/dustur-al-wahdah-android/releases/download/v1.0-debug/dustur-al-wahdah-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/dustur-al-wahdah-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/fan-al-dhikr-android/" style="--p:#22766C;--pd:#144741;--a:#4D9ACB">
+  <div class="emoji">🤲</div>
+  <div class="ar">فن الذكر والدعاء</div>
+  <div class="en">The Art of Dhikr &amp; Dua</div>
+  <div class="tagline">The Art of Dhikr &amp; Dua — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/fan-al-dhikr-android/releases/download/v1.0-debug/fan-al-dhikr-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/fan-al-dhikr-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/fi-mawkib-al-dawa-android/" style="--p:#227676;--pd:#144747;--a:#4D8CCB">
+  <div class="emoji">📖</div>
+  <div class="ar">في موكب الدعوة</div>
+  <div class="en">In the Procession of Dawah</div>
+  <div class="tagline">In the Procession of Dawah — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/fi-mawkib-al-dawa-android/releases/download/v1.0-debug/fi-mawkib-al-dawa-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/fi-mawkib-al-dawa-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/fiqh-al-sirah-android/" style="--p:#226E76;--pd:#144247;--a:#4D7FCB">
+  <div class="emoji">📜</div>
+  <div class="ar">فقه السيرة</div>
+  <div class="en">Fiqh Al-Sirah</div>
+  <div class="tagline">Fiqh Al-Sirah — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/fiqh-al-sirah-android/releases/download/v1.0-debug/fiqh-al-sirah-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/fiqh-al-sirah-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/haqiqat-al-qawmiyah-android/" style="--p:#226176;--pd:#143A47;--a:#4D6CCB">
+  <div class="emoji">📖</div>
+  <div class="ar">حقيقة القومية العربية</div>
+  <div class="en">Arab Nationalism: Truth &amp; Myth</div>
+  <div class="tagline">Arab Nationalism: Truth &amp; Myth — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/haqiqat-al-qawmiyah-android/releases/download/v1.0-debug/haqiqat-al-qawmiyah-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/haqiqat-al-qawmiyah-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/hasad-al-ghurur-android/" style="--p:#226176;--pd:#143A47;--a:#4D6CCB">
+  <div class="emoji">📖</div>
+  <div class="ar">حصاد الغرور</div>
+  <div class="en">The Harvest of Arrogance — La Moisson de l&#x27;Orgueil</div>
+  <div class="tagline">The Harvest of Arrogance — La Moisson de l&#x27;Orgueil — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/hasad-al-ghurur-android/releases/download/v1.0-debug/hasad-al-ghurur-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/hasad-al-ghurur-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/humum-daiya-android/" style="--p:#226176;--pd:#143A47;--a:#4D6CCB">
+  <div class="emoji">📖</div>
+  <div class="ar">هموم داعية</div>
+  <div class="en">Concerns of a Preacher</div>
+  <div class="tagline">Concerns of a Preacher — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/humum-daiya-android/releases/download/v1.0-debug/humum-daiya-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/humum-daiya-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/huquq-al-insan-android/" style="--p:#223176;--pd:#141D47;--a:#754DCB">
+  <div class="emoji">⚖</div>
+  <div class="ar">حقوق الإنسان</div>
+  <div class="en">Human Rights</div>
+  <div class="tagline">Human Rights — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/huquq-al-insan-android/releases/download/v1.0-debug/huquq-al-insan-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/huquq-al-insan-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/jihad-al-dawah-android/" style="--p:#223176;--pd:#141D47;--a:#754DCB">
+  <div class="emoji">🌿</div>
+  <div class="ar">جهاد الدعوة بين عجز الداخل وكيد الخارج</div>
+  <div class="en">Jihad of Dawah</div>
+  <div class="tagline">Jihad of Dawah — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/jihad-al-dawah-android/releases/download/v1.0-debug/jihad-al-dawah-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/jihad-al-dawah-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/kayfa-nafham-android/" style="--p:#222676;--pd:#141747;--a:#854DCB">
+  <div class="emoji">📖</div>
+  <div class="ar">كيف نفهم الإسلام</div>
+  <div class="en">How We Understand Islam</div>
+  <div class="tagline">How We Understand Islam — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/kayfa-nafham-android/releases/download/v1.0-debug/kayfa-nafham-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/kayfa-nafham-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/kayfa-nataamal-maa-al-quran-android/" style="--p:#292276;--pd:#181447;--a:#964DCB">
+  <div class="emoji">📖</div>
+  <div class="ar">كيف نتعامل مع القرآن</div>
+  <div class="en">How to Deal with the Quran</div>
+  <div class="tagline">How to Deal with the Quran — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/kayfa-nataamal-maa-al-quran-android/releases/download/v1.0-debug/kayfa-nataamal-maa-al-quran-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/kayfa-nataamal-maa-al-quran-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/khuluq-al-muslim-android/" style="--p:#6D2932;--pd:#4A1E26;--a:#D4A574">
+  <div class="emoji">🌟</div>
+  <div class="ar">خلق المسلم</div>
+  <div class="en">The Muslim&#x27;s Character</div>
+  <div class="tagline">Character, ethics, and the polished soul — al-Ghazali&#x27;s school</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/khuluq-al-muslim-android/releases/download/v1.0-debug/khuluq-al-muslim-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/khuluq-al-muslim-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/khutab-al-ghazali-android/" style="--p:#332276;--pd:#1E1447;--a:#A54DCB">
+  <div class="emoji">📖</div>
+  <div class="ar">خطب الغزالي</div>
+  <div class="en">Ghazali&#x27;s Sermons</div>
+  <div class="tagline">Ghazali&#x27;s Sermons — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/khutab-al-ghazali-android/releases/download/v1.0-debug/khutab-al-ghazali-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/khutab-al-ghazali-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/kunuz-min-al-sunnah-android/" style="--p:#3F2276;--pd:#261447;--a:#B84DCB">
+  <div class="emoji">✨</div>
+  <div class="ar">كنوز من السنة</div>
+  <div class="en">Treasures from the Sunnah</div>
+  <div class="tagline">Treasures from the Sunnah — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/kunuz-min-al-sunnah-android/releases/download/v1.0-debug/kunuz-min-al-sunnah-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/kunuz-min-al-sunnah-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/maa-allah-android/" style="--p:#492276;--pd:#2C1447;--a:#C74DCB">
+  <div class="emoji">🕌</div>
+  <div class="ar">مع الله</div>
+  <div class="en">With God</div>
+  <div class="tagline">With God — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/maa-allah-android/releases/download/v1.0-debug/maa-allah-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/maa-allah-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/marakah-al-mushaf-android/" style="--p:#562276;--pd:#331447;--a:#CB4DBC">
+  <div class="emoji">📖</div>
+  <div class="ar">معركة المصحف</div>
+  <div class="en">Battle of the Quran</div>
+  <div class="tagline">Battle of the Quran — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/marakah-al-mushaf-android/releases/download/v1.0-debug/marakah-al-mushaf-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/marakah-al-mushaf-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/miat-sual-android/" style="--p:#5B2276;--pd:#371447;--a:#CB4DB4">
+  <div class="emoji">📖</div>
+  <div class="ar">مائة سؤال عن الإسلام</div>
+  <div class="en">100 Questions About Islam</div>
+  <div class="tagline">100 Questions About Islam — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/miat-sual-android/releases/download/v1.0-debug/miat-sual-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/miat-sual-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/min-huna-nalam-android/" style="--p:#6C2276;--pd:#411447;--a:#CB4D9A">
+  <div class="emoji">📖</div>
+  <div class="ar">من هنا نعلم</div>
+  <div class="en">This Is Where We Learn</div>
+  <div class="tagline">This Is Where We Learn — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/min-huna-nalam-android/releases/download/v1.0-debug/min-huna-nalam-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/min-huna-nalam-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/mushkilat-android/" style="--p:#722276;--pd:#441447;--a:#CB4D92">
+  <div class="emoji">📖</div>
+  <div class="ar">مشكلات في طريق الحياة الإسلامية</div>
+  <div class="en">Problems on the Islamic Path</div>
+  <div class="tagline">Problems on the Islamic Path — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/mushkilat-android/releases/download/v1.0-debug/mushkilat-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/mushkilat-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/nahwa-tafsir-mawdui-android/" style="--p:#76226C;--pd:#471441;--a:#CB4D7D">
+  <div class="emoji">🌊</div>
+  <div class="ar">نحو تفسير موضوعي لسور القرآن</div>
+  <div class="en">Toward Thematic Quran Interpretation</div>
+  <div class="tagline">Toward Thematic Quran Interpretation — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/nahwa-tafsir-mawdui-android/releases/download/v1.0-debug/nahwa-tafsir-mawdui-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/nahwa-tafsir-mawdui-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/nazarat-fi-al-quran-android/" style="--p:#762260;--pd:#471439;--a:#CB4D6A">
+  <div class="emoji">📖</div>
+  <div class="ar">نظرات في القرآن</div>
+  <div class="en">Insights into the Quran</div>
+  <div class="tagline">Insights into the Quran — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/nazarat-fi-al-quran-android/releases/download/v1.0-debug/nazarat-fi-al-quran-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/nazarat-fi-al-quran-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/qadaya-al-marah-android/" style="--p:#762257;--pd:#471434;--a:#CB4D5D">
+  <div class="emoji">🌹</div>
+  <div class="ar">قضايا المرأة</div>
+  <div class="en">Women&#x27;s Issues</div>
+  <div class="tagline">Women&#x27;s Issues — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/qadaya-al-marah-android/releases/download/v1.0-debug/qadaya-al-marah-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/qadaya-al-marah-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/qadhaaif-al-haqq-android/" style="--p:#76224C;--pd:#47142D;--a:#CB4D4D">
+  <div class="emoji">📖</div>
+  <div class="ar">قذائف الحق</div>
+  <div class="en">Missiles of Truth</div>
+  <div class="tagline">Missiles of Truth — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/qadhaaif-al-haqq-android/releases/download/v1.0-debug/qadhaaif-al-haqq-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/qadhaaif-al-haqq-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/rakaiz-al-iman-android/" style="--p:#762246;--pd:#47142A;--a:#CB554D">
+  <div class="emoji">📖</div>
+  <div class="ar">ركائز الإيمان بين العقل والقلب</div>
+  <div class="en">Pillars of Faith</div>
+  <div class="tagline">Pillars of Faith — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/rakaiz-al-iman-android/releases/download/v1.0-debug/rakaiz-al-iman-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/rakaiz-al-iman-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/ramadan-wal-siyam-android/" style="--p:#762248;--pd:#47142B;--a:#CB534D">
+  <div class="emoji">📖</div>
+  <div class="ar">رمضان والصيام</div>
+  <div class="en">Ramadan and Fasting</div>
+  <div class="tagline">Ramadan and Fasting — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/ramadan-wal-siyam-android/releases/download/v1.0-debug/ramadan-wal-siyam-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/ramadan-wal-siyam-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/sayhah-tahdhir-android/" style="--p:#762F22;--pd:#471C14;--a:#CB9F4D">
+  <div class="emoji">📖</div>
+  <div class="ar">صيحة تحذير من دعاة التنصير</div>
+  <div class="en">Warning Against Missionaries</div>
+  <div class="tagline">Warning Against Missionaries — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/sayhah-tahdhir-android/releases/download/v1.0-debug/sayhah-tahdhir-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/sayhah-tahdhir-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/shahid-ala-al-asr-android/" style="--p:#763122;--pd:#471D14;--a:#CBA34D">
+  <div class="emoji">📖</div>
+  <div class="ar">شاهد على العصر</div>
+  <div class="en">Ghazali: Witness of the Era</div>
+  <div class="tagline">Ghazali: Witness of the Era — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/shahid-ala-al-asr-android/releases/download/v1.0-debug/shahid-ala-al-asr-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/shahid-ala-al-asr-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/taamulat-android/" style="--p:#763322;--pd:#471E14;--a:#CBA54D">
+  <div class="emoji">🌿</div>
+  <div class="ar">تأملات في الدين والحياة</div>
+  <div class="en">Reflections on Religion &amp; Life</div>
+  <div class="tagline">Reflections on Religion &amp; Life — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/taamulat-android/releases/download/v1.0-debug/taamulat-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/taamulat-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/zalam-min-al-gharb-android/" style="--p:#763B22;--pd:#472314;--a:#CBB24D">
+  <div class="emoji">📖</div>
+  <div class="ar">ظلام من الغرب</div>
+  <div class="en">Darkness from the West</div>
+  <div class="tagline">Darkness from the West — from Sheikh al-Ghazali&#x27;s legacy</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/zalam-min-al-gharb-android/releases/download/v1.0-debug/zalam-min-al-gharb-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/zalam-min-al-gharb-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+  </div>
+
+  <h2 class="section">🤖 BLE / micro:bit <span class="count">13 apps · Web Bluetooth shim → @capacitor-community/bluetooth-le</span></h2>
+  <div class="grid">
+<a class="tile" href="https://abourdim.github.io/al-ghirbal-android/" style="--p:#0F3460;--pd:#0A223D;--a:#8B1A1A">
+  <div class="emoji">⛔</div>
+  <div class="ar">الغربال</div>
+  <div class="en">al-Ghirbal — The Sieve</div>
+  <div class="tagline">Sifting what&#x27;s attached to Islam from what&#x27;s not — by Sheikh al-Ghazali</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/al-ghirbal-android/releases/download/v1.1-debug/al-ghirbal-v1.1-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/al-ghirbal-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/bit-playground-android/" style="--p:#C2410C;--pd:#7C2D12;--a:#FBBF24">
+  <div class="emoji">🎮</div>
+  <div class="ar">ساحة البت</div>
+  <div class="en">Bit Playground</div>
+  <div class="tagline">micro:bit V2 control panel via Bluetooth — for kids</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/bit-playground-android/releases/download/v1.0-debug/bit-playground-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/bit-playground-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/pixel-gateway-android/" style="--p:#4B7622;--pd:#2D4714;--a:#8ACB4D">
+  <div class="emoji">📡</div>
+  <div class="ar">بوابة البكسل</div>
+  <div class="en">PixelGateway</div>
+  <div class="tagline">PixelGateway — micro:bit &amp; Bluetooth for kids</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/pixel-gateway-android/releases/download/v1.0-debug/pixel-gateway-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/pixel-gateway-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/morse-code-android/" style="--p:#297622;--pd:#184714;--a:#57CB4D">
+  <div class="emoji">📡</div>
+  <div class="ar">شيفرة مورس</div>
+  <div class="en">Morse Kids Lab</div>
+  <div class="tagline">Morse Kids Lab — micro:bit &amp; Bluetooth for kids</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/morse-code-android/releases/download/v1.0-debug/morse-code-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/morse-code-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/mission-control-android/" style="--p:#227628;--pd:#144718;--a:#4DCB55">
+  <div class="emoji">🚀</div>
+  <div class="ar">مركز التحكم</div>
+  <div class="en">MINI MISSION CONTROL (for kids!)</div>
+  <div class="tagline">MINI MISSION CONTROL (for kids!) — micro:bit &amp; Bluetooth for kids</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/mission-control-android/releases/download/v1.0-debug/mission-control-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/mission-control-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/ble-logger-android/" style="--p:#22765E;--pd:#144738;--a:#4DCBA7">
+  <div class="emoji">📡</div>
+  <div class="ar">مسجل البلوتوث</div>
+  <div class="en">BLE Logger</div>
+  <div class="tagline">BLE Logger — micro:bit &amp; Bluetooth for kids</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/ble-logger-android/releases/download/v1.0-debug/ble-logger-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/ble-logger-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/talking-robot-android/" style="--p:#227076;--pd:#144347;--a:#4DC2CB">
+  <div class="emoji">🤖</div>
+  <div class="ar">الروبوت الناطق</div>
+  <div class="en">TALKING ROBOT</div>
+  <div class="tagline">TALKING ROBOT — micro:bit &amp; Bluetooth for kids</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/talking-robot-android/releases/download/v1.0-debug/talking-robot-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/talking-robot-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/bit-bot-android/" style="--p:#226176;--pd:#143A47;--a:#4DABCB">
+  <div class="emoji">🤖</div>
+  <div class="ar">بيت-بوت</div>
+  <div class="en">bit-bot V2</div>
+  <div class="tagline">bit-bot V2 — micro:bit &amp; Bluetooth for kids</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/bit-bot-android/releases/download/v1.0-debug/bit-bot-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/bit-bot-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/salat-times-android/" style="--p:#223176;--pd:#141D47;--a:#4D64CB">
+  <div class="emoji">🕌</div>
+  <div class="ar">مواقيت الصلاة</div>
+  <div class="en">Salat Times</div>
+  <div class="tagline">Salat Times — micro:bit &amp; Bluetooth for kids</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/salat-times-android/releases/download/v1.0-debug/salat-times-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/salat-times-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/maqueen-app-android/" style="--p:#372276;--pd:#211447;--a:#6C4DCB">
+  <div class="emoji">📡</div>
+  <div class="ar">مختبر ماكوين</div>
+  <div class="en">Maqueen Lab</div>
+  <div class="tagline">Maqueen Lab — micro:bit &amp; Bluetooth for kids</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/maqueen-app-android/releases/download/v1.0-debug/maqueen-app-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/maqueen-app-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/flight-tracker-android/" style="--p:#542276;--pd:#321447;--a:#984DCB">
+  <div class="emoji">✈</div>
+  <div class="ar">متتبع الطائرات</div>
+  <div class="en">Planes in the Sky</div>
+  <div class="tagline">Planes in the Sky — micro:bit &amp; Bluetooth for kids</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/flight-tracker-android/releases/download/v1.0-debug/flight-tracker-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/flight-tracker-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/face-quest-android/" style="--p:#762275;--pd:#471446;--a:#CB4DC9">
+  <div class="emoji">🧠</div>
+  <div class="ar">مغامرة الوجوه</div>
+  <div class="en">Face Quest</div>
+  <div class="tagline">Face Quest — micro:bit &amp; Bluetooth for kids</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/face-quest-android/releases/download/v1.0-debug/face-quest-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/face-quest-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+<a class="tile" href="https://abourdim.github.io/rxy-android/" style="--p:#762257;--pd:#471434;--a:#CB4D9D">
+  <div class="emoji">🎮</div>
+  <div class="ar">باني Remote</div>
+  <div class="en">Micro:bit Remote Builder</div>
+  <div class="tagline">Micro:bit Remote Builder — micro:bit &amp; Bluetooth for kids</div>
+  <div class="actions">
+    <span class="btn-primary" onclick="window.open('https://github.com/abourdim/rxy-android/releases/download/v1.0-debug/rxy-v1.0-debug.apk','_blank');event.preventDefault();event.stopPropagation();return false;">⬇ APK</span>
+    <span class="btn-secondary" onclick="window.open('https://github.com/abourdim/rxy-android','_blank');event.preventDefault();event.stopPropagation();return false;">🐙 src</span>
+  </div>
+</a>
+  </div>
+
+  <footer>
+    <p>Each app: Capacitor 8.3 + JDK 21 · MIT-licensed · debug APK + signed AAB on every Releases page</p>
+    <p class="ar">رحم الله الشيخ محمد الغزالي وجزاه عنا خير الجزاء 🤲</p>
+    <p>Built by <a href="https://workshop-diy.org">workshop-diy.org</a> · Source: <a href="https://github.com/abourdim/koutoub-android-template">koutoub-android-template</a></p>
+  </footer>
+</main>
+</body>
+</html>
