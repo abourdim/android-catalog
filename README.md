@@ -1,12 +1,13 @@
-# Android catalog — 60 apps from workshop-diy.org
+# Android catalog — 89 apps from workshop-diy.org
 
 Live at: **https://abourdim.github.io/android-catalog/**
 
 ## Contents
 
 - **47 al-Ghazali book apps** — trilingual Arabic/English/French wrappers around Sheikh Mohammed al-Ghazali's books
-- **12 BLE / micro:bit apps** — kid-coding apps that pair with BBC micro:bit V2 over Bluetooth
-- **1 hand-built prototype** — `al-ghirbal-android`, the original
+- **13 BLE / micro:bit apps** — kid-coding apps that pair with BBC micro:bit V2 over Bluetooth
+- **20 Islamic, daily-use & kid-edu apps** — tesbih, hajj-guide, menesik, tethkir, 3d-lab, circuit-lab, eid, salat-times, etc.
+- **9 BLE / camera / AI / IoT apps** *(May 2026)* — bit-activities, maqueen labs, face-tracking, teachable-machine, AI hacker lab, Piper Arabic TTS, MQTT lab, ESP32-C3 kids lab
 
 Each app:
 - Capacitor 8.3 + JDK 21
